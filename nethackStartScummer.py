@@ -1,12 +1,24 @@
 import pexpect, sys, time
+# This script can be used to repeatedly start and toss nethack games
+# in order to get the character you want.
+# by
+# jblakey@gmail.com
 
+############################# CONFIGURATION ################################
 
 # Make sure these items are in the order that they normally appear
 # in your inventory...
 # The default order is Scrolls, Spellbooks, Potions, Rings, Wands, Tools
 # DO NOT USE META CHARACTERS HERE...
-wanted_objects = ["identify", "spellbook of charm", "smoky", "magic marker"]
+wanted_objects = ["identify", "spellbook of charm", "magic marker"]
 
+nethack_command = "nethack"
+char_alignment = "n"
+char_race = "h"
+char_sex = "m"
+max_tries = 5000
+
+########################## END CONFIGURATION ################################
 
 def scum(wantedObjectsList):
 
@@ -14,12 +26,12 @@ def scum(wantedObjectsList):
 
     # First, build the regex from the wantedObjectsList...
     # This is a little junky, and prone to breakage...
+    # but so far, it works...
     big_regex = ""
     for thisItem in wantedObjectsList:
          big_regex += "(" + thisItem + ").+"
 
     myWantedObjects.append(big_regex)
-    print(myWantedObjects)
     
     # And then append the (end) tag...
     myWantedObjects.append(r'\(end\)')
@@ -28,10 +40,11 @@ def scum(wantedObjectsList):
     # us over to a 2 page inventory...
     myWantedObjects.append(r'\(1 of 2\)')
 
-    n = pexpect.spawn('nethack')
+    n = pexpect.spawn(nethack_command)
     n.setecho(True)
     r = n.expect("Shall I pick")
-    n.send("nwhmny")
+    my_specs = "n" + char_class + char_race + char_sex + char_alignment + "y"
+    n.send(my_specs)
     n.expect("Go bravely")
     n.send(' ')
     n.expect("welcome to")
@@ -65,7 +78,7 @@ def scum(wantedObjectsList):
 
 def main():
 
-    for i in range(1, 1000):
+    for i in range(1, max_tries):
 
         print("Run: " + str(i))
         success = scum(wanted_objects)
