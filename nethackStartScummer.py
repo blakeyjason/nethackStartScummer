@@ -16,6 +16,7 @@ nethack_command = "nethack"
 char_alignment = "n"
 char_race = "h"
 char_sex = "m"
+char_class="w"
 max_tries = 5000
 
 ########################## END CONFIGURATION ################################
