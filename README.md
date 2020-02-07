@@ -9,11 +9,12 @@ This script will run nethack over and over until the character that is generated
 
 1. A scroll of identify
 2. A spellbook of charm monster
-3. A smoky potion
-4. A magic marker
+3. A magic marker
 
 
 It's a bit rough, but does work.  On my old laptop, it takes about a second per try.
+
+You can set your character preferences in the configuration section inside the script.
 
 
 Tested on Nethack version 3.6.1, Python 3.7.5
